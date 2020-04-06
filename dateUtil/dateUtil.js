@@ -2,6 +2,23 @@
  *  此js文件主要包含日期方面的工具函数
  */
 
+ //示例: 格林尼治时间 2020-02-01T15:59:59.000+0000
+export const formatGreenwich=(data,type = 0)=>{
+    /*
+    *参数说明
+    *data 表示时间字段
+    *type 表示查找的时间  0表示只要年月日  1表示需要具体精确的时间
+    * 北京时间比格林尼治时间 + 8个小时
+    */
+    if(type) {
+        var time = new Date(data).toJSON()
+        var date = new Date(+new Date(time)+8*3600*1000).toISOString().replace(/T/g,' ').replace(/.[\d]{3}Z/,' ')
+        return date
+    } else {
+        return data.split('T')[0]
+    }
+}
+
 
 /**
  * 获取当前时间的n天后的时间戳

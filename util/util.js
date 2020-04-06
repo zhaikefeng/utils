@@ -10,6 +10,32 @@
 export const formatMoney = num => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 
+//格式化数字并实现自动补零
+export const formatMoneyAuto = (number, decimals, dec_point) =>{
+    /*
+    * 参数说明：
+    * number：要格式化的数字
+    * decimals：保留几位小数
+    * dec_point：小数点符号
+    * */
+   number = (number + '').replace(/[^0-9+-Ee.]/g, '');
+   var n = !isFinite(+number) ? 0 : +number,
+       prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+       dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+       s = '',
+       toFixedFix = function (n, prec) {
+           var k = Math.pow(10, prec);
+           return ((n * k) / k).toFixed(prec);
+       };
+   s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+   if ((s[1] || '').length < prec) {
+       s[1] = s[1] || '';
+       s[1] += new Array(prec - s[1].length + 1).join('0');
+   }
+   return s.join(dec);
+}
+
+
 /**
  *  截取字符串并加身略号
  */
